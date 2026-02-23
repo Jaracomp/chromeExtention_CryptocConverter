@@ -109,6 +109,11 @@ function setupDropdown(input, list, updateTicker) {
          if (updateTicker) {
             coin1Ticker.textContent = input.value.toUpperCase();
         }
+
+        if (!amountInput.value || amountInput.value.trim() === '') {
+            amountInput.value = '1';
+        }
+
         convert();
     });
 }
@@ -162,6 +167,11 @@ function renderList(listElement, filterText, inputElement) {
                 coin1Ticker.textContent = currency;
             }
             
+            // If amount is empty, set to 1. Otherwise keep it.
+            if (!amountInput.value || amountInput.value.trim() === '') {
+                amountInput.value = '1';
+            }
+
             convert();
         });
         
