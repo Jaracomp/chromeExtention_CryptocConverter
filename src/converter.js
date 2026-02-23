@@ -71,14 +71,23 @@ function setupDropdown(input, list, updateTicker) {
         let val = input.value;
         val = val.replace(/\s/g, ''); // Remove spaces
         val = val.replace(/[а-яА-ЯёЁ]/g, ''); // Remove Cyrillic
+        val = val.toUpperCase(); // Force uppercase
         
         if (input.value !== val) {
             input.value = val;
         }
 
-        const value = input.value.toUpperCase();
+        const value = input.value;
         renderList(list, value, input);
         list.style.display = 'block';
+    });
+
+    // Keydown event: Hide list on Enter
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            list.style.display = 'none';
+            input.blur();
+        }
     });
 
     // Focus event: Show full list or filtered list
