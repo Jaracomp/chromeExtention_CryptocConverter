@@ -18,8 +18,5 @@
 		"16": "src/converter16.png",
 		"48": "src/converter48.png",
 		"128": "src/converter128.png"
-	},
-	"background": {
-		"service_worker": "src/background.js"
 	}
 }
