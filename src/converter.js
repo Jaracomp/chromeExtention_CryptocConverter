@@ -21,7 +21,25 @@ window.addEventListener('load', async () => {
     convert();
 });
 
-amountInput.addEventListener('input', convert);
+amountInput.addEventListener('input', (e) => {
+    let val = e.target.value;
+    // Remove spaces and non-allowed chars (allow digits, dot, comma)
+    val = val.replace(/[^0-9.,]/g, '');
+
+    // Ensure only one dot or comma
+    const match = val.match(/[.,]/);
+    if (match) {
+        const firstSeparatorIndex = match.index;
+        const before = val.substring(0, firstSeparatorIndex + 1);
+        const after = val.substring(firstSeparatorIndex + 1).replace(/[.,]/g, '');
+        val = before + after;
+    }
+
+    if (e.target.value !== val) {
+        e.target.value = val;
+    }
+    convert();
+});
 
 async function fetchData() {
     try {
@@ -49,6 +67,15 @@ async function fetchData() {
 function setupDropdown(input, list, updateTicker) {
     // Input event: Filter and show list
     input.addEventListener('input', () => {
+        // Sanitize input: no spaces, no Cyrillic
+        let val = input.value;
+        val = val.replace(/\s/g, ''); // Remove spaces
+        val = val.replace(/[а-яА-ЯёЁ]/g, ''); // Remove Cyrillic
+        
+        if (input.value !== val) {
+            input.value = val;
+        }
+
         const value = input.value.toUpperCase();
         renderList(list, value, input);
         list.style.display = 'block';
